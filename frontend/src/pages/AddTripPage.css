@@ -1,60 +1,163 @@
 .home {
     font-family: Arial, sans-serif;
     padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
   
   h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 20px;
+    color: #333;
+    text-align: center;
   }
   
-  .input-container {
+  .input-container,
+  .stop-input-container,
+  .trip-datetime-container {
     display: flex;
     gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
   }
   
   .input-field {
     padding: 10px;
     font-size: 1rem;
-    width: 300px;
+    flex: 1;
+    min-width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
   }
   
-  .stop-input-container {
-    margin-top: 20px;
-    display: flex;
-    gap: 10px;
-  }
-  
-  .trip-datetime-container {
-    margin-top: 20px;
-    display: flex;
-    gap: 10px;
+  .input-field:focus {
+    border-color: #4caf50;
   }
   
   .add-stop-btn,
   .save-route-btn {
-    padding: 10px;
+    padding: 10px 20px;
     background-color: #4caf50;
     color: white;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
   }
   
-  .save-route-btn {
+  .add-stop-btn:hover,
+  .save-route-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .edit-route-container {
     margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
-  .stops-list ul {
-    padding-left: 20px;
+  .edit-route-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .save-edited-route-btn {
+    padding: 10px 20px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .save-edited-route-btn:hover {
+    background-color: #1e88e5;
   }
   
   .map-container {
     height: 400px;
     width: 100%;
     margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  button:disabled {
-    background-color: #ccc;
+  .route-details {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
+  .route-details h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .route-details p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .saved-routes {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .saved-routes h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .route-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .route-item:last-child {
+    border-bottom: none;
+  }
+  
+  .route-item p {
+    font-size: 1rem;
+    color: #555;
+    margin: 0;
+  }
+  
+  .select-route-btn {
+    padding: 5px 10px;
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .select-route-btn:hover {
+    background-color: #fb8c00;
+  }
+
+  .search-near-route-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+  }
