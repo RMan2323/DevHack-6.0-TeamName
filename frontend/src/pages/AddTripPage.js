@@ -12,7 +12,6 @@ const Home = () => {
   const [routes, setRoutes] = useState([]); // List of all routes
   const [selectedRouteIndex, setSelectedRouteIndex] = useState(null); // Currently selected route
   const [isEditing, setIsEditing] = useState(false); // Whether the user is editing a route
-  const [searchNearRoute, setSearchNearRoute] = useState(""); // Input for searching near the route
 
   useEffect(() => {
     const cleanupScript = loadMapScript(() => {
@@ -24,7 +23,7 @@ const Home = () => {
         setSource,
         setDestination,
         setStopInput,
-        setSearchNearRoute
+        setStops
       );
     });
 
@@ -41,7 +40,7 @@ const Home = () => {
         setSource,
         setDestination,
         setStopInput,
-        setSearchNearRoute
+        setStops
       );
     }
   }, [source, destination]);
@@ -162,7 +161,7 @@ const Home = () => {
         <input
           id="pac-input-stop"
           type="text"
-          placeholder="Enter Stop"
+          placeholder="Search near the route or add a stop"
           value={stopInput}
           onChange={(e) => setStopInput(e.target.value)}
           className="input-field"
@@ -185,17 +184,6 @@ const Home = () => {
           placeholder="Select Time"
           value={tripTime}
           onChange={(e) => setTripTime(e.target.value)}
-          className="input-field"
-        />
-      </div>
-
-      <div className="search-near-route-container">
-        <input
-          id="pac-input-search-near-route"
-          type="text"
-          placeholder="Search near the route"
-          value={searchNearRoute}
-          onChange={(e) => setSearchNearRoute(e.target.value)}
           className="input-field"
         />
       </div>
