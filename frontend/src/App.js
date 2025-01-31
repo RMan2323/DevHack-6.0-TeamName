@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import BuyPage from './pages/BuyPage';
 import Home from './pages/Home';
@@ -7,6 +7,8 @@ import ProductDetails from './pages/ProductDetails';
 import SellPage from './pages/SellPage';
 import ViewTripsPage from './pages/ViewTripsPage';
 import AddTripPage from './pages/AddTripPage';
+import { AuthProvider } from './context/AuthContext';
+
 function Buy() {
   return <h2>Buy Page</h2>;
 }
@@ -21,8 +23,8 @@ function Carpool() {
 
 function App() {
   return (
-    <Router>
-      <div className="App">
+    <AuthProvider>
+      <div>
         <Header />
         <Routes>
           <Route path="/buy" element={<BuyPage />} />
@@ -35,7 +37,7 @@ function App() {
           <Route path="/" element={<Home />} />
         </Routes>
       </div>
-    </Router>
+    </AuthProvider>
   );
 }
 

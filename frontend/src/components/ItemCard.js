@@ -9,9 +9,11 @@ const ItemCard = ({ item }) => {
       <h3>{item.title}</h3>
       <p>${item.price}</p>
       <p>{item.location}</p>
-      <Link to={`/product/${item.id}`} className="details-button">
-        View Details
-      </Link>
+      <div className="button-container">
+        <Link to={`/product/${item._id}`} state={{ product: item }} className="details-button">
+          View Details
+        </Link>
+      </div>
     </div>
   );
 };
