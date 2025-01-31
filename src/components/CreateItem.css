@@ -1,0 +1,15 @@
+.create-item-form {
+    max-width: 400px;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .create-item-form input,
+  .create-item-form textarea,
+  .create-item-form select,
+  .create-item-form button {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }

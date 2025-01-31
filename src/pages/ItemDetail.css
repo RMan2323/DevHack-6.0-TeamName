@@ -1,0 +1,10 @@
+.item-detail {
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .item-detail img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
