@@ -1,0 +1,60 @@
+.home {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .input-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .input-field {
+    padding: 10px;
+    font-size: 1rem;
+    width: 300px;
+  }
+  
+  .stop-input-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .trip-datetime-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .add-stop-btn,
+  .save-route-btn {
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .save-route-btn {
+    margin-top: 20px;
+  }
+  
+  .stops-list ul {
+    padding-left: 20px;
+  }
+  
+  .map-container {
+    height: 400px;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+  }
+  
