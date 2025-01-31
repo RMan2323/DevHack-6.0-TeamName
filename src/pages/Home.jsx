@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <div className="home">
       <h1>IIT Dharwad Marketplace</h1>
-      <ItemList />
+      <ItemList></ItemList>
     </div>
   );
 };

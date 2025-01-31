@@ -1,11 +1,11 @@
 export const mockItems = [
     {
       id: 1,
-      title: "Used iPhone 12",
+      title: "EGL Kit",
       description: "Great condition, 128GB, space gray",
       price: 450,
-      category: "electronics",
-      images: ["https://via.placeholder.com/150"],
+      category: "Stationary",
+      images: ["https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRXjxvcitihitkFcWDKqug4QLngJerakMav75LHVvi5XxHCaMBIuz6KslxeMz_ttotKV7KDa9FkRKtIAkQit6H4P860KtVEIIAP0uPPUbX_S027xmgHvjH8Yg"],
       location: "New York, NY"
     },
     {
