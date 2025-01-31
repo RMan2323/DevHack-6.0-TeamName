@@ -6,7 +6,7 @@ function Header() {
   return (
     <div className="header">
       <div className="logo-nav">
-      <img src="/Images/IITDhLogo.png" alt="IITDh Logo" style={{ height: '40px' }} />
+      <img src="/Images/IITDhLogo.png" alt="IITDh Logo" style={{ height: '60px' }} />
       <div>IIT Dharwad</div>
       </div>
       <div className='nav-right'>
