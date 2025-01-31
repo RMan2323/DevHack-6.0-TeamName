@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { mockItems } from '../components/mockData'; // Import mock data
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './ProductDetails.css';
 
 const ProductDetails = () => {
-  const { id } = useParams(); // Get the product ID from the URL
-  const [product, setProduct] = useState(null);
+  const location = useLocation();
+  const { product } = location.state || {};
+  const navigate = useNavigate();
+  const [contactInfo, setContactInfo] = useState(null);
 
-  useEffect(() => {
-    // Find the product in the mock data
-    const foundProduct = mockItems.find((item) => item.id === parseInt(id));
-    setProduct(foundProduct);
-  }, [id]);
+  const handleContactSeller = () => {
+    if (product) {
+      const info = `Contact ${product.ownerUsername} at ${product.ownerPhone}`;
+      toast.info(info);
+      setContactInfo(info);
+    }
+  };
 
   if (!product) {
     return <div>Product not found!</div>;
@@ -19,16 +24,16 @@ const ProductDetails = () => {
 
   return (
     <div className="product-details">
+      <button className="back-button" onClick={() => navigate(-1)}>Back</button>
       <h1>{product.title}</h1>
-      <div className="product-images">
-        {product.images.map((image, index) => (
-          <img key={index} src={image} alt={`Product ${index + 1}`} />
-        ))}
+      <p>{product.description}</p>
+      <p>Price: ${product.price}</p>
+      <p>Location: {product.location}</p>
+      <img src={product.images[0]} alt={product.title} />
+      <div className="button-container">
+        <button id="contact-seller" onClick={handleContactSeller}>Contact Seller</button>
       </div>
-      <p className="price">Price: ${product.price}</p>
-      <p className="location">Location: {product.location}</p>
-      <p className="description">{product.description}</p>
-      <button className="contact-seller">Contact Seller</button>
+      {contactInfo && <div className="contact-info">{contactInfo}</div>}
     </div>
   );
 };

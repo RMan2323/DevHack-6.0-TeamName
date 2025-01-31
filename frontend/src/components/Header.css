@@ -52,10 +52,31 @@
     padding: 10px 20px;
     font-weight: bold;
     cursor: pointer;
-    margin-right: 10px;
+    margin-right: 0%;
+    margin-left: 10px;
 }
 
 .home-button:hover {
     background-color: rgb(189, 217, 231);
     transition: all ease 0.5s;
+}
+
+.hi-username{
+    color: rgb(8, 48, 58);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.logout-button{
+    background-color: rgb(237, 242, 242);
+    color: rgb(8, 48, 58);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 10px;
 }
