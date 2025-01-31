@@ -4,7 +4,6 @@ body, html {
   padding: 0;
   overflow-x: hidden; /* Prevent horizontal scroll */
 }
-
 .home-layout {
   display: flex;
   flex-direction: column;
@@ -27,7 +26,6 @@ body, html {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.35); /* Reduced opacity for better visibility */
   z-index: 1; /* Place the overlay above the background image */
 }
 
@@ -36,7 +34,6 @@ body, html {
   position: relative;
   z-index: 2; /* Place content above the overlay */
 }
-
 .text{
   color: rgb(0, 0, 0);
   font-size: 1.5rem;

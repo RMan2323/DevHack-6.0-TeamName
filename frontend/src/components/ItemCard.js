@@ -1,6 +1,7 @@
 import "./ItemCard.css";
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 const ItemCard = ({ item }) => {
   return (
     <div className="item-card">
