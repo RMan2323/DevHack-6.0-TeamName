@@ -1,3 +1,9 @@
+/* Reset default margins and padding */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
 .home-layout {
   display: flex;
   flex-direction: column;
@@ -5,7 +11,8 @@
   padding: 2rem;
   min-height: 100vh;
   background-image: url('https://iitdh.ac.in/themes/base/images/thumb-abt-iitdh.jpg'); /* Add background image */
-  background-size: cover; /* Ensure the image covers the entire page */
+  background-size: cover;
+   /* Ensure the image covers the entire page */
   background-position: center; /* Center the image */
   background-attachment: fixed; /* Make the background fixed while scrolling */
   position: relative; /* Required for the overlay */
@@ -19,7 +26,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.7); /* White overlay with 70% opacity */
   z-index: 1; /* Place the overlay above the background image */
 }
 
@@ -28,12 +34,33 @@
   position: relative;
   z-index: 2; /* Place content above the overlay */
 }
-
+.text{
+  color: rgb(0, 0, 0);
+  font-size: 1.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.abttext{
+  color: rgb(255, 255, 255);
+  font-size: 1.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.button-link{
+  color: rgb(255, 255, 255);
+  font-size: 1.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
 .main-content {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 80%;
+  width: 90%; /* Increased width to reduce side gaps */
+  max-width: 1200px; /* Limit maximum width */
   gap: 2rem;
   margin-top: 2rem;
 }
@@ -43,16 +70,16 @@
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
   text-align: center;
 }
 
 .marketplace {
-  background-color: #e8f5e9; /* Light green background */
+  background-color: rgba(232, 245, 233, 0.8); /* Light green background with transparency */
 }
 
 .carpooling {
-  background-color: #e3f2fd; /* Light blue background */
+  background-color: rgba(227, 242, 253, 0.8); /* Light blue background with transparency */
 }
 
 .button-container {
@@ -82,58 +109,29 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-.button-link {
-  color: white;
-  font-size: 1.5rem;
-  text-decoration: none;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+
+.about-section {
+  width: 90%; /* Increased width to reduce side gaps */
+  max-width: 1200px; /* Limit maximum width */
+  margin: 2rem 0;
+  padding: 2rem;
+  background-color: rgba(193, 133, 253, 0.8); /* Slightly transparent purple background */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  size:20px;
 }
-.about-text{
-  color: white;
-  font-size: 1.5rem;
-  text-decoration: none;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+.about-text {
+  color: white; /* White text for the About section */
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
 }
 
 h2 {
   color: #333;
   font-size: 2rem;
   margin-bottom: 1rem;
-}
-
-.about-section {
-  width: 80%;
-  margin: 2rem 0;
-  padding: 2rem;
-  background-color: #c185fd;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.about-content {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.about-content h2 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 1rem;
-}
-
-.about-content p {
-  font-size: 1.1rem;
-  color: #555;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-}
-
-.about-image img {
-  width: 100%;
-  max-width: 500px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

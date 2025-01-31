@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Header from './components/Header';
 import BuyPage from './pages/BuyPage';
 import Home from './pages/Home';
-
+import ProductDetails from './pages/ProductDetails';
 function Buy() {
   return <h2>Buy Page</h2>;
 }
@@ -23,6 +23,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/buy" element={<BuyPage />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/sell" element={<Sell />} />
           <Route path="/carpool" element={<Carpool />} />
           <Route path="/" element={<Home />} />
