@@ -1,40 +1,48 @@
-// components/TripCard.js
-import React, { useState, useEffect } from 'react';
-import { GoogleMap, LoadScript, Autocomplete, Marker } from '@react-google-maps/api'; // Correct imports
+import React, { useState, useEffect, useRef } from 'react';
+import { loadMapScript } from './MapUtil'; // Adjust the path if necessary
 import './TripCard.css';
 
 const TripCard = ({ trip }) => {
-  const [isDetailsVisible, setIsDetailsVisible] = useState(false); // State for toggling trip details
-  const [stopRequest, setStopRequest] = useState(""); // State for holding the stop request input
-  const [autocomplete, setAutocomplete] = useState(null); // State for autocomplete instance
+  const [isDetailsVisible, setIsDetailsVisible] = useState(false);
+  const [stopRequest, setStopRequest] = useState("");
+  const inputRef = useRef(null);
 
-  const handleCardClick = () => {
-    setIsDetailsVisible(!isDetailsVisible); // Toggle visibility of trip details
+  const handleCardClick = (e) => {
+    if (inputRef.current && inputRef.current.contains(e.target)) {
+      return;
+    }
+    setIsDetailsVisible(!isDetailsVisible);
   };
 
   const handleStopRequestChange = (e) => {
-    setStopRequest(e.target.value); // Update the stop request input
+    setStopRequest(e.target.value);
   };
 
   const handleSubmitStopRequest = () => {
     if (stopRequest) {
-      console.log("Stop request submitted for:", stopRequest); // Print the stop request to console (for now)
-      setStopRequest(""); // Reset the stop request input field after submission
+      console.log("Stop request submitted for:", stopRequest);
+      setStopRequest("");
     } else {
       alert("Please enter a stop location.");
     }
   };
 
   useEffect(() => {
-    if (autocomplete) {
-      const placesService = new window.google.maps.places.PlacesService(autocomplete.getPlace());
-      placesService.getDetails({}, (result, status) => {
-        if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-          console.log("Place details:", result);
+    const cleanupScript = loadMapScript(() => {
+      // Initialize autocomplete for stop location in TripCard
+      const stopInput = inputRef.current;
+      const stopAutocomplete = new window.google.maps.places.Autocomplete(stopInput);
+      
+      stopAutocomplete.addListener("place_changed", () => {
+        const place = stopAutocomplete.getPlace();
+        if (place.geometry) {
+          setStopRequest(place.formatted_address);
         }
       });
-    }
-  }, [autocomplete]);
+    });
+
+    return cleanupScript;
+  }, []); 
 
   return (
     <div className="trip-card" onClick={handleCardClick}>
@@ -46,20 +54,12 @@ const TripCard = ({ trip }) => {
         <p><strong>Fare:</strong> ₹{trip.fare}</p>
       </div>
 
-      {/* Trip Details Toggle */}
       {isDetailsVisible && (
         <div className="trip-details">
           <h4>Trip Details:</h4>
-          <p><strong>Source:</strong> {trip.source}</p>
-          <p><strong>Destination:</strong> {trip.destination}</p>
-          <p><strong>Date:</strong> {trip.date}</p>
-          <p><strong>Time:</strong> {trip.time}</p>
-          <p><strong>People:</strong> {trip.people}</p>
-          <p><strong>Fare:</strong> ₹{trip.fare}</p>
-          
-          {/* Make Stop Request */}
           <div className="stop-request-container">
             <input
+              ref={inputRef} 
               type="text"
               placeholder="Enter stop location"
               value={stopRequest}
