@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { loadMapScript, initializeMap } from "../components/MapUtil";
 import "./AddTripPage.css";
 
-const Home = () => {
+const AddTripPage = () => {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [stops, setStops] = useState([]); // Array of stops
   const [stopInput, setStopInput] = useState(""); // Input for adding a stop
   const [tripDate, setTripDate] = useState(""); // Input for trip date
   const [tripTime, setTripTime] = useState(""); // Input for trip time
+  const [numberOfPeople, setNumberOfPeople] = useState(""); // Number of people
+  const [fare, setFare] = useState(""); // Fare per person
   const [routes, setRoutes] = useState([]); // List of all routes
   const [selectedRouteIndex, setSelectedRouteIndex] = useState(null); // Currently selected route
   const [isEditing, setIsEditing] = useState(false); // Whether the user is editing a route
@@ -60,14 +62,20 @@ const Home = () => {
     }
   };
 
+  const handleRemoveStop = (index) => {
+    setStops((prevStops) => prevStops.filter((_, i) => i !== index));
+  };
+
   const handleSaveRoute = () => {
-    if (source && destination && tripDate && tripTime) {
+    if (source && destination && tripDate && tripTime && numberOfPeople && fare) {
       const newRoute = {
         source,
         destination,
         stops,
         tripDate,
         tripTime,
+        numberOfPeople,
+        fare,
       };
       setRoutes((prevRoutes) => [...prevRoutes, newRoute]);
       setSource("");
@@ -75,8 +83,10 @@ const Home = () => {
       setStops([]);
       setTripDate("");
       setTripTime("");
+      setNumberOfPeople("");
+      setFare("");
     } else {
-      alert("Please provide source, destination, date, and time.");
+      alert("Please provide all details (source, destination, date, time, people, fare).");
     }
   };
 
@@ -88,6 +98,8 @@ const Home = () => {
     setStops(selectedRoute.stops);
     setTripDate(selectedRoute.tripDate);
     setTripTime(selectedRoute.tripTime);
+    setNumberOfPeople(selectedRoute.numberOfPeople);
+    setFare(selectedRoute.fare);
     setIsEditing(true); // Enable editing mode
   };
 
@@ -100,6 +112,8 @@ const Home = () => {
         stops,
         tripDate,
         tripTime,
+        numberOfPeople,
+        fare,
       };
       setRoutes(updatedRoutes);
       setIsEditing(false); // Disable editing mode
@@ -118,7 +132,10 @@ const Home = () => {
         </p>
         {stops.map((stop, index) => (
           <p key={index}>
-            <strong>Stop {index + 1}:</strong> {stop}
+            <strong>Stop {index + 1}:</strong> {stop}{" "}
+            <button onClick={() => handleRemoveStop(index)} className="remove-stop-btn">
+              Remove
+            </button>
           </p>
         ))}
         <p>
@@ -129,6 +146,12 @@ const Home = () => {
         </p>
         <p>
           <strong>Time:</strong> {tripTime}
+        </p>
+        <p>
+          <strong>Number of People:</strong> {numberOfPeople}
+        </p>
+        <p>
+          <strong>Total Fare:</strong> ₹{fare}
         </p>
       </div>
     );
@@ -188,6 +211,23 @@ const Home = () => {
         />
       </div>
 
+      <div className="people-fare-container">
+        <input
+          type="number"
+          placeholder="Number of People"
+          value={numberOfPeople}
+          onChange={(e) => setNumberOfPeople(e.target.value)}
+          className="input-field"
+        />
+        <input
+          type="number"
+          placeholder="Total fare"
+          value={fare}
+          onChange={(e) => setFare(e.target.value)}
+          className="input-field"
+        />
+      </div>
+
       <button onClick={handleSaveRoute} className="save-route-btn">
         Save Route
       </button>
@@ -203,7 +243,6 @@ const Home = () => {
 
       <div id="map" className="map-container"></div>
 
-      {/* Render route details in the desired format */}
       {renderRouteDetails()}
 
       <div className="saved-routes">
@@ -227,4 +266,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default AddTripPage;

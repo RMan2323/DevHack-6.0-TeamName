@@ -1,7 +1,7 @@
 export const loadMapScript = (callback) => {
   const script = document.createElement("script");
   script.src =
-    "https://maps.gomaps.pro/maps/api/js?key=AlzaSylZmBqWbt7osSeL0-K4f0NvjxWFFEI_oiT&libraries=geometry,places,directions&callback=initMap";
+    "https://maps.gomaps.pro/maps/api/js?key=AlzaSy_t4BpD6uVwj0bWyw_gfoxVxpAz_YzlzrG&libraries=geometry,places,directions&callback=initMap";
   script.async = true;
   script.defer = true;
   window.initMap = callback;
