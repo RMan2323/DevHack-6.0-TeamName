@@ -14,9 +14,6 @@ const ItemCard = ({ item, onBuyItem }) => {
                 <Link to={`/product/${item._id}`} state={{ product: item }} className="details-button">
                     View Details
                 </Link>
-                <button onClick={() => onBuyItem(item._id)} className="buy-button">
-                    Buy Now
-                </button>
             </div>
         </div>
     );

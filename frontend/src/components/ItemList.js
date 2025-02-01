@@ -7,7 +7,7 @@ const ItemList = ({ items, onBuyItem }) => {
     return (
         <div className="item-list">
             {items.map((item) => (
-                <ItemCard key={item._id} item={item} onBuyItem={onBuyItem} />
+                <ItemCard key={item._id} item={item} />
             ))}
         </div>
     );
