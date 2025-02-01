@@ -73,7 +73,7 @@ const TripCard = ({ trip }) => {
               onChange={handleStopRequestChange}
               className="input-field"
             />
-            <button onClick={handleSubmitStopRequest} className="submit-stop-request-btn">
+            <button onClick={handleSubmitStopRequest} className="submit-stop-request-btn" style={{width : '100%'}}>
               Make Stop Request
             </button>
           </div>
