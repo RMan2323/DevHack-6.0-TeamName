@@ -1,19 +1,48 @@
-import React from 'react';
+// pages/BuyPage.js
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../components/axiosInstance';
 import ItemList from '../components/ItemList';
 import './BuyPage.css';
 
 const BuyPage = () => {
-  return (
-    <div className="buy-page">
-      <div className="buy-page-header">
-        <h1>Marketplace</h1>
-        <p>Explore and buy items from your fellow students.</p>
-      </div>
-      <div className="item-list-container">
-        <ItemList />
-      </div>
-    </div>
-  );
+    const [items, setItems] = useState([]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchItems = async () => {
+            try {
+                const response = await axiosInstance.get('/api/items');
+                setItems(response.data);
+            } catch (error) {
+                console.error('Error fetching items:', error);
+            }
+        };
+        fetchItems();
+    }, []);
+
+    const handleBuyItem = (itemId) => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('Please login first to buy items.');
+            navigate('/login');
+        } else {
+            // Proceed with the purchase logic
+            console.log('Buying item with ID:', itemId);
+        }
+    };
+
+    return (
+        <div className="buy-page">
+            <div className="buy-page-header">
+                <h1>Marketplace</h1>
+                <p>Explore and buy items from your fellow students.</p>
+            </div>
+            <div className="item-list-container">
+                <ItemList items={items} onBuyItem={handleBuyItem} />
+            </div>
+        </div>
+    );
 };
 
 export default BuyPage;
