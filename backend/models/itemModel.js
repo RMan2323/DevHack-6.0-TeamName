@@ -7,7 +7,6 @@ const itemSchema = new mongoose.Schema({
     description: { type: String, required: true }, // Item description
     category: { type: String, required: true }, // Item category (e.g., Stationary, Furniture, Clothing)
     images: { type: [String], required: true }, // Array of image URLs
-    location: { type: String, required: true }, // Item location
     ownerUsername: { type: String, required: true }, // Username of the owner selling the item
     ownerPhone: { type: String, required: true }, // Phone number of the owner
     yearsUsed: { type: Number, required: true }, // Number of years the item has been used
