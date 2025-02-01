@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SellPage.css';
 import axiosInstance from '../components/axiosInstance';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SellPage = () => {
   const [item, setItem] = useState({
@@ -29,11 +31,13 @@ const SellPage = () => {
           alert('You must be logged in to view your items.');
           return;
         }
+        console.log('Fetching user items with token:', token);
         const response = await axiosInstance.get('/api/items/user', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
         });
+        console.log('Fetched user items:', response.data);
         setUserItems(response.data);
       } catch (error) {
         console.error('Error fetching user items:', error);
@@ -49,13 +53,14 @@ const SellPage = () => {
         alert('You must be logged in to mark an item as sold.');
         return;
       }
-      await axiosInstance.delete(`/api/items/${itemId}`, {
+      console.log('Marking item as sold with ID:', itemId);
+      await axiosInstance.delete(`/api/items/sell/${itemId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
-      setUserItems(userItems.filter(item => item.id !== itemId));
-      alert('Item marked as sold!');
+      setUserItems(userItems.filter(item => item._id !== itemId));
+      toast.success('Item marked as sold and removed successfully!');
     } catch (error) {
       console.error('Error marking item as sold:', error);
     }
@@ -129,6 +134,7 @@ const SellPage = () => {
 
   return (
     <div className="sell-page">
+      <ToastContainer />
       <h1>Sell an Item</h1>
       <div className="sell-container">
         <form onSubmit={handleSubmit} className="sell-form">
@@ -175,9 +181,9 @@ const SellPage = () => {
           {userItems.length > 0 ? (
             <ul>
               {userItems.map(item => (
-                <li key={item.id}>
+                <li key={item._id}>
                   <p>{item.title}</p>
-                  <button onClick={() => handleItemSold(item.id)}>Item Sold</button>
+                  <button onClick={() => handleItemSold(item._id)}>Item Sold</button>
                 </li>
               ))}
             </ul>
