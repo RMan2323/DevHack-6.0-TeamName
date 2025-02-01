@@ -7,15 +7,15 @@ const ViewTripsPage = () => {
   useEffect(() => {
     const fetchTrips = async () => {
       try {
-        const response = await fetch('/api/carpool-trips');
-        const data = await response.json();
-        setTrips(data);
+        const response = await axiosInstance.get('/api/carpool'); 
+        setTrips(response.data);
       } catch (error) {
-        console.error('Error fetching trips:', error);
+        console.error('Error:', error);
       }
     };
     fetchTrips();
   }, []);
+  
 
   return (
     <div className="view-trips-page">

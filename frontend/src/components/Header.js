@@ -5,16 +5,28 @@ import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import axiosInstance from './axiosInstance';
 
 function Header() {
   const { isAuthenticated, setIsAuthenticated, user, setUser } = useContext(AuthContext);
 
-  const handleLoginSuccess = (credentialResponse) => {
-    const token = credentialResponse.credential;
-    const decoded = jwtDecode(token);
-    setIsAuthenticated(true);
-    setUser(decoded);
+  const handleLoginSuccess = async (credentialResponse) => {
+    try {
+      const response = await axiosInstance.post('/api/auth/google', {
+        token: credentialResponse.credential
+      });
+      
+      // Backend should return user data + JWT
+      const { token, user } = response.data;
+      localStorage.setItem('token', token);
+      setIsAuthenticated(true);
+      setUser(user);
+      
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
   };
+  
 
   const handleLogout = () => {
     setIsAuthenticated(false);

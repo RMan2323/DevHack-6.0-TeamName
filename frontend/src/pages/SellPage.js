@@ -5,12 +5,13 @@ import './SellPage.css';
 const SellPage = () => {
   const [item, setItem] = useState({
     name: '',
-    price: '',
+    price: 0,
     description: '',
-    ownerName: '',
-    yearsUsed: '',
+    yearsUsed: 0,
+    category: 'Other',
+    condition: 'Used'
   });
-
+  
   const navigate = useNavigate();
 
   const handleChange = (e) => {

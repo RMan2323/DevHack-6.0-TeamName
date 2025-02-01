@@ -13,7 +13,7 @@ const io = new Server(server);
 
 // Middleware
 app.use(cors());
-app.use(express.json({origin: 'http://localhost:3000', // Allow requests from frontend
+app.use(express.json({origin: 'http://localhost:5000', // Allow requests from frontend
   credentials: true,}));
 
 // MongoDB connection

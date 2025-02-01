@@ -2,10 +2,19 @@ import React from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 
 const GoogleLoginButton = () => {
-  const onSuccess = (response) => {
-    console.log('Login Success: currentUser:', response);
-    // Here, you can send the response.credential to your backend for verification
-  };
+  // Add to onSuccess handler
+  const onSuccess = async (response) => {
+  try {
+    const res = await axiosInstance.post('/api/auth/google', {
+      token: response.credential
+    });
+    localStorage.setItem('token', res.data.token);
+    // Update AuthContext state
+  } catch (err) {
+    console.error('Auth failed:', err);
+  }
+};
+
 
   const onFailure = (response) => {
     console.error('Login Failed: res:', response);

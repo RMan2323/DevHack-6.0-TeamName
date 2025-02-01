@@ -4,29 +4,60 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 
 const router = express.Router();
-const client = new OAuth2Client('914973085387-m4dv9f5nbqn3skeuukr3bqnh0g61034e.apps.googleusercontent.com');
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID); // Use env variable
 
 // Google login route
-router.post('/google-login', async (req, res) => {
-    const { credential } = req.body; // Get the credential from the request body
+router.post('/google', async (req, res) => {
     try {
-        const ticket = await client.verifyIdToken({ idToken: credential, audience: '914973085387-m4dv9f5nbqn3skeuukr3bqnh0g61034e.apps.googleusercontent.com' });
-        const payload = ticket.getPayload();
-        const { email, name, picture } = payload;
+        const { token } = req.body;
+        
+        // Verify Google token
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: process.env.GOOGLE_CLIENT_ID
+        });
 
-        // Check if user already exists
-        let user = await User.findOne({ email });
+        const payload = ticket.getPayload();
+
+        // Find or create user
+        let user = await User.findOne({ 
+            $or: [
+                { email: payload.email },
+                { googleId: payload.sub }
+            ]
+        });
+
         if (!user) {
-            // Create a new user if not exists
-            user = new User({ username: name, email, phoneNumber: '', productsForSale: [], productsBought: [], ownCarpoolTrips: [], requestedCarpoolTrips: [] });
+            user = new User({
+                username: payload.name,
+                email: payload.email,
+                googleId: payload.sub
+            });
             await user.save();
         }
 
-        // Generate JWT token
-        const token = jwt.sign({ id: user._id }, 'hello', { expiresIn: '1h' });
-        res.status(200).json({ token });
+        // Generate JWT
+        const jwtToken = jwt.sign(
+            { userId: user._id }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: '1h' }
+        );
+
+        res.json({ 
+            token: jwtToken, 
+            user: {
+                id: user._id,
+                name: user.username,
+                email: user.email
+            }
+        });
+
     } catch (error) {
-        res.status(401).send('Invalid token');
+        console.error('Authentication error:', error);
+        res.status(401).json({ 
+            error: 'Authentication failed',
+            details: error.message 
+        });
     }
 });
 
