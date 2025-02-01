@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 
 // Controller function to sell an item
 exports.sellItem = async (req, res) => {
-    const { name, price, description } = req.body;
+    const { title, price, description, category, images, location, ownerUsername, ownerPhone, yearsUsed } = req.body;
     try {
-        const newItem = new Item({ name, price, description });
+        const newItem = new Item({ title, price, description, category, images, location, ownerUsername, ownerPhone, yearsUsed });
         await newItem.save();
-        res.status(201).send('Item added successfully');
+        res.status(201).json({ message: 'Item added successfully', item: newItem });
     } catch (error) {
-        res.status(500).send('Error adding item');
+        res.status(500).json({ message: 'Error adding item', error: error.message });
     }
 };
 
