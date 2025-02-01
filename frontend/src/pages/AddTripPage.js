@@ -28,24 +28,40 @@ const AddTripPage = () => {
         setStops
       );
     });
-
+  
     return cleanupScript;
-  }, []);
-
+  }, []); // Initialize map only once on component mount
+  
   useEffect(() => {
     if (source && destination) {
       const mapElement = document.getElementById("map");
-      initializeMap(
-        mapElement,
-        source,
-        destination,
-        setSource,
-        setDestination,
-        setStopInput,
-        setStops
-      );
+      const directionsRenderer = new window.google.maps.DirectionsRenderer();
+      const map = new window.google.maps.Map(mapElement, {
+        center: { lat: 15.48745, lng: 74.93446 }, // Default center
+        zoom: 13,
+      });
+      directionsRenderer.setMap(map);
+  
+      const fetchDirections = (origin, dest) => {
+        const directionsService = new window.google.maps.DirectionsService();
+        const directionsRequest = {
+          origin: origin,
+          destination: dest,
+          travelMode: window.google.maps.TravelMode.DRIVING,
+        };
+  
+        directionsService.route(directionsRequest, (result, status) => {
+          if (status === window.google.maps.DirectionsStatus.OK) {
+            directionsRenderer.setDirections(result);
+          } else {
+            console.error("Directions request failed due to " + status);
+          }
+        });
+      };
+  
+      fetchDirections(source, destination); // Fetch directions when source/destination changes
     }
-  }, [source, destination]);
+  }, [source, destination]); // Re-fetch directions when source or destination changes
 
   const handleSourceChange = (e) => {
     setSource(e.target.value);

@@ -100,4 +100,9 @@ export const initializeMap = (
       map.setCenter(place.geometry.location);
     }
   });
+
+  // Fetch directions if source and destination are already set
+  if (source && destination) {
+    fetchDirections(source, destination);
+  }
 };
