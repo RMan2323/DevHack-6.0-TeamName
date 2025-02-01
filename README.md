@@ -77,7 +77,7 @@ REACT_APP_MAP_KEY=your_mapbox_key_here
 Start backend:  
 ```
 cd backend  
-npm run dev  
+npm start 
 ```
 Start frontend:  
 ```
@@ -87,10 +87,10 @@ npm start
 --------------------------------------------------
 
 🛠️ Technologies  
-Frontend: React, Redux, Material-UI  
+Frontend: React
 Backend: Node.js, Express, MongoDB  
-Auth: JWT, bcryptjs  
-Maps: Mapbox  
+Auth: JWT,  
+Maps: Gomaps  
 
 --------------------------------------------------
 
