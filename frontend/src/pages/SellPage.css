@@ -1,58 +1,139 @@
 /* SellPage.css */
 .sell-page {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .sell-page h1 {
-    font-size: 2rem;
-    color: #333;
-    text-align: center;
-    margin-bottom: 1.5rem;
-  }
-  
-  .sell-page form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .sell-page label {
-    font-size: 1rem;
-    color: #555;
-    font-weight: bold;
-  }
-  
-  .sell-page input,
-  .sell-page textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-    margin-top: 0.5rem;
-  }
-  
-  .sell-page textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-  
-  .sell-page button {
-    background-color: #6a1b9a;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 1rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .sell-page button:hover {
-    background-color: #4a148c;
-  }
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.sell-text{
+  padding-right: 430px;
+  font-size: 2.5rem;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 2rem;
+}
+.sell-page h1 {
+  font-size: 2.5rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+.sell-container {
+  display: flex;
+  gap: 2rem;
+}
+
+.sell-form {
+  width: 60%;
+  padding: 1.5rem;
+  background-color: rgba(232, 245, 233, 0.8); /* Light green background with transparency */
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sell-form label {
+  font-size: 1.1rem;
+  color: #444;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.sell-form input,
+.sell-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  background-color: #fff;
+}
+
+.sell-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.sell-form button {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #a553d8d6; /* Match Home Page button color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  opacity: 0.9;
+  margin-left: 100px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.sell-form button:hover {
+  background-color: #8e44ad; /* Slightly darker shade on hover */
+}
+
+.my-items {
+  width: 40%;
+  padding: 1.5rem;
+ 
+  background-color: rgba(227, 242, 253, 0.8); /* Light blue background with transparency */
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.my-items h2 {
+  padding-left: 130px;
+  font-size: 1.8rem;
+  color: #b042fe;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.my-items ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.my-items li {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.my-items p {
+  padding-left: 60px;
+  font-size: 1.1rem;
+  color: #444;
+  font-weight: bold;
+}
+
+.my-items button {
+  background-color: #e57373;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.my-items button:hover {
+  background-color: #d32f2f;
+}
