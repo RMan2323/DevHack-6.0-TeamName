@@ -14,6 +14,7 @@ const SellPage = () => {
     ownerUsername: '',
     ownerPhone: '',
     yearsUsed: '',
+    dateAdded: new Date().toISOString(),
 });
 
   const navigate = useNavigate();
@@ -26,17 +27,52 @@ const SellPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const token = localStorage.getItem('token');
-        if (!token) {
+        // Validate and convert data types
+        const processedItem = {
+            title: item.title.trim(),
+            price: Number(item.price),
+            description: item.description.trim(),
+            category: item.category.trim(),
+            images: item.images.filter(img => img.trim() !== ''),
+            location: item.location.trim(),
+            ownerUsername: item.ownerUsername.trim(),
+            ownerPhone: item.ownerPhone.trim(),
+            yearsUsed: Number(item.yearsUsed),
+            dateAdded: new Date().toISOString()
+        };
+
+        // Detailed validation
+        const validationErrors = [];
+        if (!processedItem.title) validationErrors.push('Item Name');
+        if (isNaN(processedItem.price) || processedItem.price <= 0) validationErrors.push('Price (must be a positive number)');
+        if (!processedItem.description) validationErrors.push('Description');
+        if (!processedItem.category) validationErrors.push('Category');
+        if (processedItem.images.length === 0) validationErrors.push('Image URLs');
+        if (!processedItem.location) validationErrors.push('Location');
+        if (!processedItem.ownerUsername) validationErrors.push('Username');
+        if (!processedItem.ownerPhone) validationErrors.push('Phone Number');
+        if (isNaN(processedItem.yearsUsed) || processedItem.yearsUsed < 0) validationErrors.push('Years Used (must be a non-negative number)');
+
+        if (validationErrors.length > 0) {
+            alert(`Please correct the following fields:\n${validationErrors.join('\n')}`);
+            return;
+        }
+
+        const backendToken = localStorage.getItem('backendToken');
+        console.log('Backend Token:', backendToken);
+
+        if (!backendToken) {
             alert('You must be logged in to sell an item.');
             return;
         }
-        const response = await axiosInstance.post('/api/items/sell', item, {
+
+        const response = await axiosInstance.post('/api/items/sell', processedItem, {
             headers: {
-                'Authorization': `Bearer ${token}`,
+                Authorization: `Bearer ${backendToken}`,
                 'Content-Type': 'application/json',
             },
         });
+
         if (response.status === 201) {
             alert('Item listed successfully!');
             navigate('/buy');
@@ -44,7 +80,8 @@ const SellPage = () => {
             alert('Failed to list item.');
         }
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Full Error Details:', error);
+        alert(`Error: ${error.response?.data?.message || error.message || 'Unknown error occurred'}`);
     }
 };
 

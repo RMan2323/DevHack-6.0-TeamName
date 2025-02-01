@@ -35,6 +35,7 @@ function App() {
           <Route path="/sell" element={<Sell />} />
           <Route path="/carpool" element={<Carpool />} />
           <Route path="/" element={<Home />} />
+          
         </Routes>
       </div>
     </AuthProvider>
