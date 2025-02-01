@@ -9,40 +9,47 @@ const TripCard = ({ trip }) => {
 
   const handleCardClick = (e) => {
     if (inputRef.current && inputRef.current.contains(e.target)) {
-      return;
+      return; // Don't toggle details if clicked inside input
     }
-    setIsDetailsVisible(!isDetailsVisible);
+    setIsDetailsVisible(!isDetailsVisible); // Toggle trip details visibility
   };
 
   const handleStopRequestChange = (e) => {
-    setStopRequest(e.target.value);
+    setStopRequest(e.target.value); // Update stop request as user types
   };
 
   const handleSubmitStopRequest = () => {
     if (stopRequest) {
       console.log("Stop request submitted for:", stopRequest);
-      setStopRequest("");
+      setStopRequest(""); // Clear the stop request input after submission
     } else {
       alert("Please enter a stop location.");
     }
   };
 
   useEffect(() => {
-    const cleanupScript = loadMapScript(() => {
-      // Initialize autocomplete for stop location in TripCard
-      const stopInput = inputRef.current;
-      const stopAutocomplete = new window.google.maps.places.Autocomplete(stopInput);
-      
-      stopAutocomplete.addListener("place_changed", () => {
-        const place = stopAutocomplete.getPlace();
-        if (place.geometry) {
-          setStopRequest(place.formatted_address);
+    if (isDetailsVisible) {
+      const cleanupScript = loadMapScript(() => {
+        const stopInput = inputRef.current;
+        if (stopInput && window.google) {
+          const autocomplete = new window.google.maps.places.Autocomplete(stopInput, {
+            types: ['geocode'], // Restrict to geographic locations
+          });
+  
+          autocomplete.addListener("place_changed", () => {
+            const place = autocomplete.getPlace();
+            if (place.geometry) {
+              setStopRequest(place.formatted_address); // Update stop request with selected place
+            }
+          });
+  
+          console.log("Autocomplete initialized"); // Add this line for debugging
         }
       });
-    });
-
-    return cleanupScript;
-  }, []); 
+  
+      return cleanupScript;
+    }
+  }, [isDetailsVisible]); // Reinitialize autocomplete when isDetailsVisible changes
 
   return (
     <div className="trip-card" onClick={handleCardClick}>
@@ -59,7 +66,7 @@ const TripCard = ({ trip }) => {
           <h4>Trip Details:</h4>
           <div className="stop-request-container">
             <input
-              ref={inputRef} 
+              ref={inputRef} // Attach ref to the input field for autocomplete
               type="text"
               placeholder="Enter stop location"
               value={stopRequest}
