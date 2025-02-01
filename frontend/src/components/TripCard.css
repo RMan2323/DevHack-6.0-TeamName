@@ -1,0 +1,58 @@
+/* components/TripCard.css */
+.trip-card {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 1rem;
+  cursor: pointer; /* Change cursor on hover */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.trip-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.trip-details {
+  margin-top: 1rem;
+}
+
+.stop-request-container {
+  margin-top: 1rem;
+}
+
+.stop-request-container .input-field {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.submit-stop-request-btn {
+  padding: 0.8rem 1.5rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.submit-stop-request-btn:hover {
+  background-color: #45a049;
+}
+
+.add-trip-btn {
+  padding: 1rem 2rem;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  margin-top: 2rem;
+  cursor: pointer;
+}
+
+.add-trip-btn:hover {
+  background-color: #0056b3;
+}

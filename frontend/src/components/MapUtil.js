@@ -1,10 +1,11 @@
+// MapUtil.js
 export const loadMapScript = (callback) => {
   const script = document.createElement("script");
   script.src =
-    "https://maps.gomaps.pro/maps/api/js?key=AlzaSy_t4BpD6uVwj0bWyw_gfoxVxpAz_YzlzrG&libraries=geometry,places,directions&callback=initMap";
+    "https://maps.gomaps.pro/maps/api/js?key=AlzaSy_t4BpD6uVwj0bWyw_gfoxVxpAz_YzlzrG&libraries=places&callback=initMap";
   script.async = true;
   script.defer = true;
-  window.initMap = callback;
+  window.initMap = callback; // Ensure initMap is globally available
   document.body.appendChild(script);
 
   return () => {
@@ -22,14 +23,12 @@ export const initializeMap = (
   setStops
 ) => {
   const map = new window.google.maps.Map(mapElement, {
-    center: { lat: 15.48745, lng: 74.93446 }, // Default center (IIT Dharwad)
+    center: { lat: 15.48745, lng: 74.93446 }, // Default center
     zoom: 13,
   });
 
   const directionsRenderer = new window.google.maps.DirectionsRenderer();
   directionsRenderer.setMap(map);
-
-  let searchMarker = null; // Marker for the searched place
 
   const fetchDirections = (origin, dest) => {
     const directionsService = new window.google.maps.DirectionsService();
@@ -47,10 +46,6 @@ export const initializeMap = (
       }
     });
   };
-
-  if (source && destination) {
-    fetchDirections(source, destination);
-  }
 
   // Autocomplete for source
   const sourceInput = document.getElementById("pac-input-source");
@@ -84,7 +79,7 @@ export const initializeMap = (
     }
   });
 
-  // Autocomplete for stops (combined with search near the route)
+  // Autocomplete for stop (near the route or added stops)
   const stopInput = document.getElementById("pac-input-stop");
   const stopAutocomplete = new window.google.maps.places.Autocomplete(stopInput);
   stopAutocomplete.bindTo("bounds", map);
@@ -94,19 +89,14 @@ export const initializeMap = (
     if (place.geometry) {
       setStopInput(place.formatted_address);
 
-      // Remove the previous marker (if any)
-      if (searchMarker) {
-        searchMarker.setMap(null);
-      }
-
-      // Add a new marker for the searched place
-      searchMarker = new window.google.maps.Marker({
+      // Optionally, add marker for the selected stop
+      const marker = new window.google.maps.Marker({
         position: place.geometry.location,
         map: map,
         title: place.name,
       });
 
-      // Center the map on the searched place
+      // Center the map to the selected stop
       map.setCenter(place.geometry.location);
     }
   });
