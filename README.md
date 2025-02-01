@@ -17,21 +17,24 @@ _(Combines marketplace + carpooling through "nexus" concept)_
 🛠️ Installation  
 
 1. Clone repository:  
+```
 git clone https://github.com/yourusername/IITD-Nexus.git  
 cd IITD-Nexus  
-
+```
 2. Install backend dependencies:  
+```
 cd backend  
 npm install  
-
+```
 3. Install frontend dependencies:  
+```
 cd ../frontend  
 npm install  
-
+```
 --------------------------------------------------
 
 📁 Project Structure  
-
+```
 backend/  
 ├─ config/  # Database configuration
 ├─ controllers/  # Business logic
@@ -49,7 +52,7 @@ frontend/
    └─ App.js  
 
 package-lock.json  # Dependency tree
-
+```
 --------------------------------------------------
 
 ⚙️ Environment Setup  
@@ -57,26 +60,30 @@ package-lock.json  # Dependency tree
 Create these files:  
 
 backend/.env  
+```
 MONGO_URI=mongodb://localhost:27017/iitd_nexus  
 JWT_SECRET=your_jwt_secret_here  
 PORT=5000  
-
+```
 frontend/.env  
+```
 REACT_APP_API_URL=http://localhost:5000/api  
 REACT_APP_MAP_KEY=your_mapbox_key_here  
-
+```
 --------------------------------------------------
 
 🚀 Running  
 
 Start backend:  
+```
 cd backend  
 npm run dev  
-
+```
 Start frontend:  
+```
 cd ../frontend  
 npm start  
-
+```
 --------------------------------------------------
 
 🛠️ Technologies  
@@ -103,5 +110,5 @@ MIT License - See LICENSE file
 
 ⚠️ IMPORTANT:  
 1. Replace "yourusername" in GitHub URL  
-2. Generate REAL JWT_SECRET (never use placeholder)  
+2. Generate REAL_JWT_SECRET (never use placeholder)  
 3. Get actual Mapbox API key  
