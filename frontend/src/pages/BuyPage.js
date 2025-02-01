@@ -21,25 +21,16 @@ const BuyPage = () => {
         fetchItems();
     }, []);
 
-    const handleBuyItem = (itemId) => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            alert('Please login first to buy items.');
-            navigate('/login');
-        } else {
-            // Proceed with the purchase logic
-            console.log('Buying item with ID:', itemId);
-        }
-    };
-
     return (
         <div className="buy-page">
             <div className="buy-page-header">
                 <h1>Marketplace</h1>
                 <p>Explore and buy items from your fellow students.</p>
             </div>
+            <button className="back-button" onClick={() => navigate(-1)}>Back</button>
+
             <div className="item-list-container">
-                <ItemList items={items} onBuyItem={handleBuyItem} />
+                <ItemList items={items} />
             </div>
         </div>
     );

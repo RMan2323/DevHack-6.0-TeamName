@@ -8,7 +8,7 @@ exports.authenticateUser = (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, 'your_jwt_secret');
+        const decoded = jwt.verify(token, 'hello');
         req.user = decoded;
         next();
     } catch (error) {
