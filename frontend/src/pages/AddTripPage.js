@@ -196,7 +196,7 @@ const AddTripPage = () => {
         />
       </div>
 
-      <div className="stop-input-container">
+      <div className="pac-input-stop">   {/*only changed ID*/}
         <input
           id="pac-input-stop"
           type="text"
