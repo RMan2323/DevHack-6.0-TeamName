@@ -2,14 +2,12 @@
 let mapScriptLoaded = false;
 
 export const loadMapScript = (callback) => {
-  // If script is already loaded, call callback immediately
   if (window.google && window.google.maps) {
     console.log("Google Maps already loaded");
     callback();
     return () => {};
   }
 
-  // Prevent multiple script loads
   if (mapScriptLoaded) {
     return () => {};
   }
@@ -19,12 +17,10 @@ export const loadMapScript = (callback) => {
   script.async = true;
   script.defer = true;
 
-  // Global callback to prevent multiple initializations
   window.initMap = () => {
     console.log("Google Maps script loaded successfully");
     mapScriptLoaded = true;
     
-    // Verify Maps and Places libraries are available
     if (window.google && window.google.maps && window.google.maps.places) {
       callback();
     } else {
@@ -39,15 +35,13 @@ export const loadMapScript = (callback) => {
     mapScriptLoaded = false;
   };
 
-  // Add a timeout to catch loading issues
   const scriptLoadTimeout = setTimeout(() => {
     if (!window.google || !window.google.maps) {
       console.error("Google Maps script failed to load within the expected time");
     }
-  }, 10000); // 10 seconds timeout
+  }, 10000);
 
   return () => {
-    // Cleanup function
     clearTimeout(scriptLoadTimeout);
     if (script.parentNode) {
       document.body.removeChild(script);
@@ -67,71 +61,129 @@ export const initializeMap = (
 ) => {
   // Create map instance
   const map = new window.google.maps.Map(mapElement, {
-    center: { lat: 15.48745, lng: 74.93446 }, // Default center
+    center: { lat: 15.48745, lng: 74.93446 },
     zoom: 13,
   });
 
-  // Create directions renderer
-  const directionsRenderer = new window.google.maps.DirectionsRenderer();
-  directionsRenderer.setMap(map);
+  // Create directions service and renderer
+  const directionsService = new window.google.maps.DirectionsService();
+  const directionsRenderer = new window.google.maps.DirectionsRenderer({
+    map: map,
+    preserveViewport: true
+  });
+
+  // Store markers in an array
+  let markers = [];
+
+  const clearMarkers = () => {
+    markers.forEach(marker => marker.setMap(null));
+    markers = [];
+  };
+
+  const calculateAndDisplayRoute = (origin, dest) => {
+    if (!origin || !dest) return;
+
+    const request = {
+      origin: origin,
+      destination: dest,
+      travelMode: window.google.maps.TravelMode.DRIVING,
+    };
+
+    directionsService.route(request, (result, status) => {
+      if (status === window.google.maps.DirectionsStatus.OK) {
+        directionsRenderer.setDirections(result);
+        const bounds = new window.google.maps.LatLngBounds();
+        result.routes[0].legs[0].steps.forEach((step) => {
+          bounds.extend(step.start_location);
+          bounds.extend(step.end_location);
+        });
+        map.fitBounds(bounds);
+      } else {
+        console.error("Directions request failed due to " + status);
+      }
+    });
+  };
 
   // Autocomplete for source
   const sourceInput = document.getElementById("pac-input-source");
-  const sourceAutocomplete = new window.google.maps.places.Autocomplete(sourceInput, {
-    types: ['geocode'],
-    fields: ['formatted_address', 'geometry']
-  });
+  const sourceAutocomplete = new window.google.maps.places.Autocomplete(sourceInput);
   sourceAutocomplete.bindTo("bounds", map);
 
   sourceAutocomplete.addListener("place_changed", () => {
     const place = sourceAutocomplete.getPlace();
-    if (place.geometry && place.formatted_address) {
-      map.fitBounds(place.geometry.viewport);
+    if (place.geometry) {
       setSource(place.formatted_address);
+      if (destination) {
+        calculateAndDisplayRoute(place.formatted_address, destination);
+      }
     }
   });
 
   // Autocomplete for destination
   const destinationInput = document.getElementById("pac-input-destination");
-  const destinationAutocomplete = new window.google.maps.places.Autocomplete(destinationInput, {
-    types: ['geocode'],
-    fields: ['formatted_address', 'geometry']
-  });
+  const destinationAutocomplete = new window.google.maps.places.Autocomplete(destinationInput);
   destinationAutocomplete.bindTo("bounds", map);
 
   destinationAutocomplete.addListener("place_changed", () => {
     const place = destinationAutocomplete.getPlace();
-    if (place.geometry && place.formatted_address) {
-      map.fitBounds(place.geometry.viewport);
+    if (place.geometry) {
       setDestination(place.formatted_address);
+      if (source) {
+        calculateAndDisplayRoute(source, place.formatted_address);
+      }
     }
   });
 
   // Autocomplete for stop
   const stopInput = document.getElementById("pac-input-stop");
-  const stopAutocomplete = new window.google.maps.places.Autocomplete(stopInput, {
-    types: ['geocode'],
-    fields: ['formatted_address', 'geometry']
-  });
+  const stopAutocomplete = new window.google.maps.places.Autocomplete(stopInput);
   stopAutocomplete.bindTo("bounds", map);
 
   stopAutocomplete.addListener("place_changed", () => {
     const place = stopAutocomplete.getPlace();
-    if (place.geometry && place.formatted_address) {
-      const formattedAddress = place.formatted_address;
-      setStopInput(formattedAddress);
+    if (place.geometry) {
+      setStopInput(place.formatted_address);
 
-      // Add marker for the selected stop
+      // Create marker for the stop
       const marker = new window.google.maps.Marker({
         position: place.geometry.location,
         map: map,
         title: place.name,
+        animation: window.google.maps.Animation.DROP,
+        icon: {
+          url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+        }
       });
 
-      // Center the map to the selected stop
-      map.setCenter(place.geometry.location);
+      // Add marker to array
+      markers.push(marker);
+
+      // Create info window
+      const infoWindow = new window.google.maps.InfoWindow({
+        content: `<div><strong>${place.name || 'Stop'}</strong><br>${place.formatted_address}</div>`
+      });
+
+      marker.addListener("click", () => {
+        infoWindow.open(map, marker);
+      });
+
+      // Adjust bounds to show both route and marker
+      if (directionsRenderer.getDirections()) {
+        const bounds = directionsRenderer.getDirections().routes[0].bounds;
+        bounds.extend(place.geometry.location);
+        map.fitBounds(bounds);
+      } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(15);
+      }
     }
   });
 
-  return map;
+  return {
+    map,
+    directionsRenderer,
+    directionsService,
+    calculateAndDisplayRoute,
+    clearMarkers
+  };
 };
