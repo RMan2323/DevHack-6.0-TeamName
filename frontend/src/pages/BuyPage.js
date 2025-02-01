@@ -27,6 +27,8 @@ const BuyPage = () => {
                 <h1>Marketplace</h1>
                 <p>Explore and buy items from your fellow students.</p>
             </div>
+            <button className="back-button" onClick={() => navigate(-1)}>Back</button>
+
             <div className="item-list-container">
                 <ItemList items={items} />
             </div>

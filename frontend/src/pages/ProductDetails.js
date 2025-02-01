@@ -27,8 +27,7 @@ const ProductDetails = () => {
       <button className="back-button" onClick={() => navigate(-1)}>Back</button>
       <h1>{product.title}</h1>
       <p>{product.description}</p>
-      <p>Price: ${product.price}</p>
-      <p>Location: {product.location}</p>
+      <p>Price: Rs. {product.price}</p>
       <img src={product.images[0]} alt={product.title} />
       <div className="button-container">
         <button id="contact-seller" onClick={handleContactSeller}>Contact Seller</button>

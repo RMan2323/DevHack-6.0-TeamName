@@ -20,6 +20,21 @@
   color: #555;
 }
 
+.back-button {
+  position: absolute;
+  margin-right: 3vw;
+  margin-top: 15vh;
+  top: 1rem;
+  right: 1rem;
+  background-color: #3087b8;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 .item-list-container {
   max-width: 1200px;
   margin: 0 auto;
