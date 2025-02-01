@@ -6,6 +6,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 const authRoutes = require('./routes/authRoutes'); // Import auth routes
 const itemRoutes = require('./routes/itemRoutes'); // Import item routes
+const carpoolRoutes = require('./routes/carpoolRoutes'); // Import carpool routes
 
 const app = express();
 const server = http.createServer(app);
@@ -37,6 +38,7 @@ io.on('connection', (socket) => {
 // Use Routes
 app.use('/api/auth', authRoutes); // Use auth routes
 app.use('/api/items', itemRoutes); // Use item routes
+app.use('/api/carpool', carpoolRoutes); // Use carpool routes
 
 // Start server
 const PORT = process.env.PORT || 5000;
