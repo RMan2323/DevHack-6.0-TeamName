@@ -22,23 +22,34 @@ const SellPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/items', {
+      // Add full backend URL and auth header
+      const response = await fetch('http://localhost:5000/api/items', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}` // Add auth
         },
-        body: JSON.stringify(item),
+        body: JSON.stringify({
+          ...item,
+          // Remove ownerName (should come from auth)
+          yearsUsed: Number(item.yearsUsed) // Ensure number type
+        }),
       });
-      if (response.ok) {
-        alert('Item listed successfully!');
-        navigate('/buy');
-      } else {
-        alert('Failed to list item.');
+      
+      const data = await response.json(); // Always parse JSON
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to list item');
       }
+      
+      alert('Item listed successfully!');
+      navigate('/buy');
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Submission error:', error);
+      alert(error.message || 'Failed to list item. Check console for details.');
     }
   };
+  
 
   return (
     <div className="sell-page">
