@@ -1,5 +1,5 @@
-# IITD Nexus
-**"MERN Stack Marketplace & Community Exchange Platform"**
+# IITDH Nexus
+**"MERN Stack Marketplace & Community Exchange Platform"**<br>
 _(Combines marketplace + carpooling through "nexus" concept)_
 
 --------------------------------------------------
@@ -18,8 +18,8 @@ _(Combines marketplace + carpooling through "nexus" concept)_
 
 1. Clone repository:  
 ```
-git clone https://github.com/yourusername/IITD-Nexus.git  
-cd IITD-Nexus  
+git clone https://github.com/RMan2323/DevHack-6.0-TeamName.git
+cd DevHack-6.0-TeamName.git  
 ```
 2. Install backend dependencies:  
 ```
