@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 
 // Controller function to sell an item
 exports.sellItem = async (req, res) => {
-    const { title, price, description, category, images, location, ownerUsername, ownerPhone, yearsUsed } = req.body;
+    const { title, price, description, category, images, location, ownerUsername, ownerPhone, yearsUsed, dateAdded } = req.body;
     try {
-        const newItem = new Item({ title, price, description, category, images, location, ownerUsername, ownerPhone, yearsUsed });
+        const newItem = new Item({ title, price, description, category, images, location, ownerUsername, ownerPhone, yearsUsed, dateAdded });
         await newItem.save();
         res.status(201).json({ message: 'Item added successfully', item: newItem });
     } catch (error) {

@@ -12,9 +12,11 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 // Middleware
-app.use(cors());
-app.use(express.json({origin: 'http://localhost:3000', // Allow requests from frontend
-  credentials: true,}));
+app.use(cors({
+  origin: 'http://localhost:3000', // Replace with your frontend's URL
+  credentials: true,
+}));
+app.use(express.json());
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
