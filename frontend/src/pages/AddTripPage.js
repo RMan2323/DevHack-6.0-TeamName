@@ -16,14 +16,14 @@ const AddTripPage = () => {
   const [selectedRouteIndex, setSelectedRouteIndex] = useState(null); // Currently selected route
   const [isEditing, setIsEditing] = useState(false); // Whether the user is editing a route
   const [error, setError] = useState(null); // Error state for form submission
-  const [map, setMap] = useState(null); // Google Map instance
+  const [mapInstance, setMapInstance] = useState(null); // Google Map instance
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneError, setPhoneError] = useState('');
 
   useEffect(() => {
     const cleanupScript = loadMapScript(() => {
       const mapElement = document.getElementById("map");
-      const initializedMap = initializeMap(
+      const instance = initializeMap(
         mapElement,
         source,
         destination,
@@ -32,60 +32,22 @@ const AddTripPage = () => {
         setStopInput,
         setStops
       );
-      setMap(initializedMap);
+      setMapInstance(instance);
     });
 
-    return cleanupScript;
+    return () => {
+      if (mapInstance) {
+        mapInstance.clearMarkers();
+      }
+      cleanupScript();
+    };
   }, []);
 
   useEffect(() => {
-    if (source && destination) {
-      const mapElement = document.getElementById("map");
-      const directionsRenderer = new window.google.maps.DirectionsRenderer();
-      const map = new window.google.maps.Map(mapElement, {
-        center: { lat: 15.48745, lng: 74.93446 }, // Default center
-        zoom: 13,
-      });
-      directionsRenderer.setMap(map);
-
-      const fetchDirections = (origin, dest) => {
-        // Ensure Google Maps API and map are loaded
-        if (window.google && window.google.maps && map) {
-          const directionsService = new window.google.maps.DirectionsService();
-          const directionsRenderer = new window.google.maps.DirectionsRenderer();
-          directionsRenderer.setMap(map);
-
-          const directionsRequest = {
-            origin: origin,
-            destination: dest,
-            travelMode: window.google.maps.TravelMode.DRIVING,
-          };
-
-          directionsService.route(directionsRequest, (result, status) => {
-            if (status === window.google.maps.DirectionsStatus.OK) {
-              directionsRenderer.setDirections(result);
-            } else {
-              console.error("Directions request failed due to " + status);
-            }
-          });
-        } else {
-          console.error("Google Maps API or map not initialized");
-        }
-      };
-
-      const findDirections = () => {
-        if (source && destination) {
-          fetchDirections(source, destination);
-        } else {
-          alert("Please select both source and destination");
-        }
-      };
-
-      // Call findDirections when locations are fully selected
-      findDirections();
-
+    if (mapInstance && source && destination) {
+      mapInstance.calculateAndDisplayRoute(source, destination);
     }
-  }, [source, destination]);
+  }, [source, destination, mapInstance]);
 
   const handleSourceChange = (e) => {
     setSource(e.target.value);
